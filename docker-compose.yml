@@ -1,0 +1,53 @@
+version: "3.7"
+services:
+  db:
+    image: "mysql:5.7"
+    restart: always
+    environment:
+     MYSQL_ROOT_PASSWORD: root
+     MYSQL_USERNAME: root
+     MYSQL_PASSWORD: root
+        - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - db:/var/run/mysqld
+    logging:
+            driver: none
+    ports:
+      - "33061:3306"
+  redis:
+    image: redis:4.0-alpine
+    command: redis-server
+    volumes:
+      - redis:/data
+    ports:
+      - 6379
+    logging:
+            driver: none
+  web:
+    build: ./
+    command: bash -c "bash ./init.sh"
+    environment:
+     DB_USERNAME: root
+     DB_PASSWORD: root
+     DB_NAME: chatapp_development
+     DB_PORT: 3306
+     DB_HOST: db
+     RAILS_ENV: development
+     RAILS_MAX_THREADS: 5
+     REDIS_HOST: redis
+     REDIS_PORT: 6379
+     BUNDLE_PATH: /bundle
+    volumes:
+      - ../:/rails-app
+      - bundle:/bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "db"
+      - "redis"
+volumes:
+  db:
+  bundle:
+  redis:
