@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :applications do 
     resources :chats do
       resources :messages
+      post "/messages/search", to: 'messages#search'
     end
   end
 end
