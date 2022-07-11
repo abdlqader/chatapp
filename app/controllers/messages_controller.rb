@@ -8,6 +8,16 @@ class MessagesController < ApplicationController
         render json: @messages.as_json(:except => [:id, :chat_id])
     end
 
+    def search
+      begin
+        @messages = Message.partial_match(params[:message], @chat.id)
+      rescue StandardError
+        render :json => []
+      else
+        render json: @messages.as_json(:except => [:id, :chat_id])
+      end
+    end
+
     # POST applications/1/chats/1/messages
     def create
         messageObject = {
