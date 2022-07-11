@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
         messageObject = {
           chat_id: @chat.id,
           message_number: @message_number,
-          message: params[:content]
+          message: params[:message]
         }
         handler = PublishHandler.new
         handler.send_message($messageQueueName, messageObject)
