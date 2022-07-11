@@ -1,53 +1,78 @@
-version: "3.7"
+version: '4'
 services:
   db:
-    image: "mysql:5.7"
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: strongpassword101
+      MYSQL_DATABASE: chatapp_development
+    restart: always
+    ports:
+       - "33088:3306"
+
+  rabbitmq:
+    image: rabbitmq:3.9-management-alpine
+    restart: always
+    ports:
+      - 5674:5672
+      - 15674:15672
+
+  redis:
+    image: redis:5-alpine
+    container_name: redis
+    restart: always
+    ports:
+      - 6390:6379
+  
+  app:
+    build: .
+    command: bash -c "bash ./init.sh"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+    ports:
+      - '3000:3000'
     restart: always
     environment:
-     MYSQL_ROOT_PASSWORD: root
-     MYSQL_USERNAME: root
-     MYSQL_PASSWORD: root
-        - '3306:3306'
-    expose:
-      - '3306'
+      DB_NAME: chatapp_development
+      DB_USER: root
+      DB_PASSWORD: strongpassword101
+      DB_HOST: db
+      REDIS_HOST: redis
+      RABBITMQ_HOST: rabbitmq
+
+  chatworker:
+    build: .
+    command: rake sneakers:run
     volumes:
-      - db:/var/run/mysqld
-    logging:
-            driver: none
-    ports:
-      - "33061:3306"
-  redis:
-    image: redis:4.0-alpine
-    command: redis-server
-    volumes:
-      - redis:/data
-    ports:
-      - 6379
-    logging:
-            driver: none
-  web:
-    build: ./
-    command: bash -c "bash ./init.sh"
-    environment:
-     DB_USERNAME: root
-     DB_PASSWORD: root
-     DB_NAME: chatapp_development
-     DB_PORT: 3306
-     DB_HOST: db
-     RAILS_ENV: development
-     RAILS_MAX_THREADS: 5
-     REDIS_HOST: redis
-     REDIS_PORT: 6379
-     BUNDLE_PATH: /bundle
-    volumes:
-      - ../:/rails-app
-      - bundle:/bundle
-    ports:
-      - "3000:3000"
+      - .:/app
     depends_on:
-      - "db"
-      - "redis"
-volumes:
-  db:
-  bundle:
-  redis:
+      - db
+      - rabbitmq
+    restart: always
+    environment:
+      DB_NAME: chatapp_development
+      DB_USER: root
+      DB_PASSWORD: strongpassword101
+      DB_HOST: db
+      RABBITMQ_HOST: rabbitmq
+      WORKERS: ChatWorker
+
+  messageworker:
+    build: .
+    command: rake sneakers:run
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - rabbitmq
+    restart: always
+    environment:
+      DB_NAME: chatapp_development
+      DB_USER: root
+      DB_PASSWORD: strongpassword101
+      DB_HOST: db
+      RABBITMQ_HOST: rabbitmq
+      WORKERS: MessageWorker

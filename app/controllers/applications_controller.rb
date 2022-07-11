@@ -31,7 +31,7 @@ class ApplicationsController < ApplicationController
     private
         #Get application by token to share functionality
         def set_application
-            @application = Application.find_by_token(params[:id])
+            @application = Application.find_by_token(params[:id]).last
         end
 
         # Get Random token
