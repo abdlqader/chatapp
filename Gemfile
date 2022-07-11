@@ -18,6 +18,14 @@ gem "puma", "~> 5.0"
 #figaro for env managment
 gem "figaro"
 
+#RABBITMQ dependencies
+gem "bunny"
+gem "sneakers"
+
+#REDIS dependencies
+gem "redis"
+gem "redis-namespace"
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
