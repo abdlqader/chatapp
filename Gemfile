@@ -30,6 +30,9 @@ gem "redis-namespace"
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 
+#cron job dependency
+gem 'rufus-scheduler'
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
