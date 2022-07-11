@@ -10,13 +10,14 @@ class MessagesController < ApplicationController
 
     # POST applications/1/chats/1/messages
     def create
-        @message = Message.new(message: params[:message], chat_id: @chat.id, number: @message_number)
-
-        if @message.save
-            render json: @message.as_json(:except => [:id, :chat_id]), status: :created
-        else
-            render json: @message.errors, status: :unprocessable_entity
-        end
+        messageObject = {
+          chat_id: @chat.id,
+          message_number: @message_number,
+          message: params[:content]
+        }
+        handler = PublishHandler.new
+        handler.send_message($messageQueueName, messageObject)
+        render :json =>{"number": @message_number}, status: :created
     end
 
     private
@@ -27,12 +28,9 @@ class MessagesController < ApplicationController
     end
 
     def set_message_number
-      message = Message.where(chat_id: @chat.id).last
-      if message == nil
-        @message_number = 1
-      else
-        @message_number = message.number + 1
-      end
+      redis_key = "message_number_for_" + @chat.id.to_s
+      redis_handler = RedisHandler.new
+      @message_number = redis_handler.incr_key(redis_key)
     end
     #Only allow message paramter.
     def message_params
