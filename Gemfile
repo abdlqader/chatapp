@@ -26,6 +26,10 @@ gem "sneakers"
 gem "redis"
 gem "redis-namespace"
 
+#Elastic serch dependencies
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
