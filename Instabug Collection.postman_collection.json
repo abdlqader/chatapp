@@ -1,0 +1,279 @@
+{
+	"info": {
+		"_postman_id": "001de7bf-ecd5-4237-99d8-8b571bdc4381",
+		"name": "Instabug Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20420796"
+	},
+	"item": [
+		{
+			"name": "Application",
+			"item": [
+				{
+					"name": "Get all applications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/applications",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create application",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"testing application\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/applications",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one application",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/applications/{{APPLICATION}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"applications",
+								"{{APPLICATION}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update one application",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"edited application\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/applications/{{APPLICATION}}",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"applications",
+								"{{APPLICATION}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chats",
+			"item": [
+				{
+					"name": "Show all chats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/applications/{{APPLICATION}}/chats",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"applications",
+								"{{APPLICATION}}",
+								"chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create chat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/applications/{{APPLICATION}}/chats",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"applications",
+								"{{APPLICATION}}",
+								"chats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Messages",
+			"item": [
+				{
+					"name": "Show all messages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/applications/{{APPLICATION}}/chats/{{CHAT}}/messages",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"applications",
+								"{{APPLICATION}}",
+								"chats",
+								"{{CHAT}}",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create on message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\":\"sparta\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/applications/{{APPLICATION}}/chats/{{CHAT}}/messages",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"applications",
+								"{{APPLICATION}}",
+								"chats",
+								"{{CHAT}}",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search chat's message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": \"this is  a testas\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/applications/{{APPLICATION}}/chats/{{CHAT}}/messages/search",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"applications",
+								"{{APPLICATION}}",
+								"chats",
+								"{{CHAT}}",
+								"messages",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "API_URL",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "APPLICATION",
+			"value": "hy1mii3ory",
+			"type": "string"
+		},
+		{
+			"key": "CHAT",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}
