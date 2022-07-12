@@ -12,7 +12,6 @@ class ApplicationsController < ApplicationController
     end
     # POST /applications
     def create 
-        puts @applicationToken
         @application = Application.new(token: @applicationToken, name: params[:name])
         if @application.save
             render json: @application.as_json(:except => :id), status: :created, location: @application
@@ -31,7 +30,7 @@ class ApplicationsController < ApplicationController
     private
         #Get application by token to share functionality
         def set_application
-            @application = Application.find_by_token(params[:id]).last
+            @application = Application.where(token: params[:id]).last
         end
 
         # Get Random token

@@ -13,12 +13,14 @@ Regarding the update of `chats_count` and `messages_count`, I will use a job sch
 ## Run Command
 `docker-compose up --build`
 
+## Run tests Command
+`bin/rails test`
+
 ## endpoint tests
 in order to test endpoints individually please use `Instabug Collection.postman_collection.json` collection
 
 ## Next steps and concerns
-1. Write specs for the code
-2. understand race condition and investigate if RabbitMq doesnt handle it properly
-3. `chats_count` and `messages_count` handling should be inside the queue worker, but this might be Read/write consuming while its not required to be realtime
-4. understand golang and see if it could be implemented in time
+1. understand race condition and investigate if RabbitMq doesnt handle it properly
+2. `chats_count` and `messages_count` handling should be inside the queue worker, but this might be Read/write consuming while its not required to be realtime
+3. understand golang and see if it could be implemented in time
  
